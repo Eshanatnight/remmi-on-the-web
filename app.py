@@ -1,4 +1,4 @@
-import pickle
+import pickle, gzip
 from typing import List
 from keys import api_key
 
@@ -34,8 +34,11 @@ def recommend(movie):
 if __name__ == '__main__':
     st.header('Movie Recommender System')
 
-    movies = pickle.load(open('movie_list.pkl','rb'))
-    similarity = pickle.load(open('similarity.pkl','rb'))
+    with gzip.open('movie_list.pklz','rb') as movies:
+        pickle.load(movies)
+
+    with gzip.open('similarity.pkl','rb') as similarity:
+        pickle.load(similarity)
 
     movie_list = movies['title'].values
 
