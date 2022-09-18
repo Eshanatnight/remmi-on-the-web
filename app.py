@@ -37,7 +37,7 @@ if __name__ == '__main__':
     with gzip.open('movie_list.pklz','rb') as movies:
         pickle.load(movies)
 
-    with gzip.open('similarity.pkl','rb') as similarity:
+    with gzip.open('similarity.pklz','rb') as similarity:
         pickle.load(similarity)
 
     movie_list = movies['title'].values
