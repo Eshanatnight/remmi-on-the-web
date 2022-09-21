@@ -8,6 +8,7 @@ import requests
 
 
 def fetch_poster(movie_id):
+    """Fetch the poster image using the TMDb API."""
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
     data = requests.get(url)
     data = data.json()
@@ -16,6 +17,7 @@ def fetch_poster(movie_id):
     return full_path
 
 def recommend(movie):
+    """Recommend movies based on the input movie."""
     index = movies[movies['title'] == movie].index[0]
     distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
     recommended_movie_names = []
@@ -30,8 +32,30 @@ def recommend(movie):
     return recommended_movie_names, recommended_movie_posters
 
 
+def alter_style():
+    """Define the specific CSS style for the app."""
+    hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
+    custom_css = """
+            <style>
+            body {
+                color: #fff;
+                background-color: #111;
+            }
+            </style>
+            """
+    st.markdown(custom_css, unsafe_allow_html=True)
+
 
 if __name__ == '__main__':
+    alter_style()
+
     st.header('Movie Recommender System')
 
     with gzip.open('movie_list.pklz','rb') as movies_:
